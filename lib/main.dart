@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:get_it/get_it.dart';
 import 'package:mechanic/services/auth.service.dart';
 import 'package:mechanic/config/env.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() {
   runApp(VxState(
@@ -25,7 +26,8 @@ class MyStore extends VxStore {
 
 final getIt = GetIt.instance;
 
-void registerServices() {
+Future<void> registerServices() async {
+  await Hive.initFlutter();
   getIt.registerSingleton<AuthService>(AuthService());
 }
 

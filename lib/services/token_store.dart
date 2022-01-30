@@ -8,8 +8,7 @@ class FirebaseTokenStore extends TokenStore {
 
   static Future<FirebaseTokenStore> create() async {
     // Make sure you call both:
-    // Hive.init(storePath);
-    // Hive.registerAdapter(TokenAdapter(), adapterId);
+    Hive.registerAdapter(TokenAdapter());
 
     var box = await Hive.openBox("auth_store",
         compactionStrategy: (entries, deletedEntries) => deletedEntries > 50);
@@ -35,6 +34,7 @@ class TokenAdapter extends TypeAdapter<Token> {
   final typeId = 42;
 
   @override
+  // ignore: avoid_renaming_method_parameters
   void write(BinaryWriter writer, Token token) =>
       writer.writeMap(token.toMap());
 
